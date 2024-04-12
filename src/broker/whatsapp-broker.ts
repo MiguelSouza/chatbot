@@ -21,7 +21,7 @@ export class WhatsAppBrokerService {
           client.messages.create(messageData).then((message) => message.sid)
         }
       } else {
-        client.messages.create(message).then((message) => message.sid)
+        client.messages.create(message).then((message: any) => message.sid)
       }
     } catch (error) {
       console.error('Erro ao obter os dados do cliente:', error)
