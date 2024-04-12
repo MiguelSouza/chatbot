@@ -18,7 +18,7 @@ export class WhatsAppBrokerService {
           await new Promise((resolve) => {
             setTimeout(resolve, 1000)
           })
-          client.messages.create(messageData).then((message) => message.sid)
+          client.messages.create(messageData).then((message: any) => message.sid)
         }
       } else {
         client.messages.create(message).then((message: any) => message.sid)
