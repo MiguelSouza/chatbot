@@ -33,6 +33,11 @@ app.post('/api/receive-message', async (req: express.Request, res: express.Respo
   req.body
   messageChannelController.waitingMessage(req, res, conversations)
 })
+
+app.get('/api/test', async (req: express.Request, res: express.Response) => {
+  console.log('teste')
+})
+
 server.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`)
 })
