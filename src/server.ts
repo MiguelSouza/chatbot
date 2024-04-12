@@ -4,7 +4,7 @@ import { MessageChannelController } from './controllers'
 import { CustomerService } from './services/customer-service'
 import { MessageChannel } from './usecases'
 require('dotenv').config()
-const express = require('express')
+import express from 'express';
 const app = express()
 const cors = require('cors')
 const bodyParser = require('body-parser')
@@ -29,7 +29,7 @@ app.use(express.json())
 
 const conversations = new NodeCache()
 
-app.post('/api/receive-message', async (req, res, next) => {
+app.post('/api/receive-message', async (req: express.Request, res: express.Response) => {
   req.body
   messageChannelController.waitingMessage(req, res, conversations)
 })
