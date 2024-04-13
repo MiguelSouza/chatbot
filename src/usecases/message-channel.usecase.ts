@@ -52,7 +52,7 @@ export class MessageChannel {
 
           await this.whatsappBroker.sendMessage(optionsMessage)
         },
-        100000,
+        1000*60*10,
       )
     }
   }
