@@ -52,7 +52,7 @@ export class MessageChannel {
 
           await this.whatsappBroker.sendMessage(optionsMessage)
         },
-        10 * 60 * 1000,
+        10000,
       )
     }
   }
@@ -101,7 +101,8 @@ export class MessageChannel {
           if (customer) {
             message.body = `Por favor, confirme o nome da pessoa que precisa do atendimento \n\n ${customer.NomeUsuario}? \n\n 1. Sim, o nome está correto. \n 2. Não, o nome não está correto.`
             conversation.name = customer.Nome
-            conversation.userId = customer.IdPessoa
+            conversation.userId = customer.IdUsuario
+            conversation.personId = customer.IdPessoa
             conversation.phone = customer.Telefone
             conversation.state = 'check_customer'
           } else {
@@ -155,7 +156,7 @@ export class MessageChannel {
             conversation.state = 'finished'
           } else if (body === '2') {
             const linkVideo = await this.customerService.getLinkVideoIA(
-              conversation.userId,
+              conversation.personId,
             )
             message.body = [
               'Nossa Teletriagem inteligente combina tecnologias de inteligência artificial e linguagem natural para te ajudar no início dos sintomas e orientar para o melhor desfecho de acordo com seu nível de urgência. O desfecho da sua Teletriagem pode ser o encaminhamento para uma Teleconsulta por vídeo, orientações de saúde ou necessidade de atendimento presencial. Para seguir com seu atendimento de Teletriagem inteligente, clique no link abaixo 👇\n' +

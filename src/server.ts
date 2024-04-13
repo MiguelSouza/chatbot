@@ -35,7 +35,7 @@ app.post('/api/receive-message', async (req: express.Request, res: express.Respo
 })
 
 app.get('/api/test', async (req: express.Request, res: express.Response) => {
-  console.log('teste')
+  res.send('Server no ar')
 })
 
 server.listen(port, () => {
