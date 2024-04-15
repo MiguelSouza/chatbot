@@ -12,6 +12,9 @@ const bodyParser = require('body-parser')
 const server = require('http').createServer(app)
 
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }))
+app.use(express.urlencoded({ limit: '50mb', extended: true }))
+
+
 app.use(cors())
 
 const port = 3010
@@ -29,7 +32,6 @@ app.use(express.json())
 const conversations = new NodeCache()
 
 app.post('/api/receive-message', async (req: express.Request, res: express.Response) => {
-  req.body
   messageChannelController.waitingMessage(req, res, conversations)
 })
 
