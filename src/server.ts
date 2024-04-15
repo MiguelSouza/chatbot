@@ -12,7 +12,6 @@ const bodyParser = require('body-parser')
 const server = require('http').createServer(app)
 
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }))
-app.use(express.urlencoded({ limit: '50mb' }))
 app.use(cors())
 
 const port = 3010
