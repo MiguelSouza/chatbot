@@ -52,7 +52,7 @@ export class MessageChannel {
 
           await this.whatsappBroker.sendMessage(optionsMessage)
         },
-        1000*60*10,
+        1000 * 60 * 10,
       )
     }
   }
@@ -238,12 +238,6 @@ export class MessageChannel {
             ]
             conversation.state = 'first_option'
           }
-          message.body = [
-            'Olá, bem vindo(a) a Tele Clínica Brasil 💙\n' +
-              '1 - Sou cliente e quero atendimento \n' +
-              '2 - Não sou cliente',
-          ]
-          conversation.state = 'first_option'
 
           break
 
