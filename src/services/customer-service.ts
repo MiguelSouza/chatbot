@@ -37,6 +37,36 @@ export class CustomerService {
     }
   }
 
+  async getSimpleCustomer(cpf: string): Promise<any> {
+    try {
+      const token = await this.getToken()
+      const data = {
+        usuario: cpf,
+        Empresa: process.env.EMPRESA,
+      }
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+
+      const res: any = await axios
+        .post(`${this.baseURL}api/login/acessosimplificado`, data, config)
+        .then((response) => {
+          return response.data
+        })
+        .catch((error) => {
+          console.error('Erro ao enviar dados:', error)
+        })
+
+      return res
+    } catch (error) {
+      throw new Error('Erro ao obter os dados do cliente')
+    }
+  }
+
   async getCustomerData(cpf: string): Promise<any> {
     try {
       const token = await this.getToken()

@@ -23,13 +23,14 @@ export class MessageChannel {
 
   async execute(body: any, conversations: NodeCache): Promise<void> {
     const { Body, From, To } = body
-
+    console.log('dsadsa')
     const optionsMessage = await this.buildOptionsMessage(
       Body,
       To,
       From,
       conversations,
     )
+    console.log(optionsMessage)
     await this.whatsappBroker.sendMessage(optionsMessage)
 
     let conversation: Conversation = (conversations &&
@@ -98,10 +99,12 @@ export class MessageChannel {
           break
         case 'start':
           const customer = await this.customerService.getCustomerData(body)
+          const simpleCustomer =
+            await this.customerService.getSimpleCustomer(body)
           if (customer) {
             message.body = `Por favor, confirme o nome da pessoa que precisa do atendimento \n\n ${customer.NomeUsuario}? \n\n 1. Sim, o nome está correto. \n 2. Não, o nome não está correto.`
             conversation.name = customer.Nome
-            conversation.userId = customer.IdUsuario
+            conversation.userId = simpleCustomer.IdUsuario
             conversation.personId = customer.IdPessoa
             conversation.phone = customer.Telefone
             conversation.state = 'check_customer'
