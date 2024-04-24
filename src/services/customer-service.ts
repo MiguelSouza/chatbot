@@ -71,7 +71,7 @@ export class CustomerService {
     try {
       const token = await this.getToken()
       const data = {
-        cpf: cpf,
+        CPF: cpf,
         Idempresa: process.env.EMPRESA,
       }
 
