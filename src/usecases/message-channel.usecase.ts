@@ -69,6 +69,7 @@ export class MessageChannel {
         userId: '',
         phone: '',
         name: '',
+        type: '',
       })
       conversation = conversations && conversations.get(from)
       message.body = [
@@ -153,7 +154,8 @@ export class MessageChannel {
                 `${linkVideo.Url}\n\n\n` +
                 'Para voltar ao menu anterior digite 1',
             ]
-            conversation.state = 'finished'
+            conversation.type = 'videochamada'
+            conversation.state = 'finished_tele_ia'
           } else if (body === '2') {
             const linkVideo = await this.customerService.getLinkVideoIA(
               conversation.personId,
@@ -163,6 +165,7 @@ export class MessageChannel {
                 `${linkVideo.urlChat}\n\n` +
                 'Para volta ao menu anterior, digite 9',
             ]
+            conversation.type = 'tele_ia'
             conversation.state = 'finished_tele_ia'
           } else if (body === '3') {
             message.body = [
@@ -284,7 +287,7 @@ export class MessageChannel {
             conversation.state = 'select_service'
           } else {
             message.body = [
-              'Já finalizou seu atendimento de Teletriagem inteligente? Queremos a sua opinião! \n ' +
+              'Já finalizou seu atendimento? Queremos a sua opinião! \n ' +
                 'Este atendimento te ajudou.\n' +
                 '1 - Sim, estou satisfeito \n' +
                 '2 - Não, estou insatisfeito',
@@ -301,12 +304,21 @@ export class MessageChannel {
 
             conversation.state = 'finished'
           } else if (body === '2') {
-            message.body = [
-              'Que pena, gostaria de iniciar um novo atendimento de teletriagem por vídeochamada com um de nossos enfermeiros(as)? \n\n' +
-                '1 - Sim\n' +
-                '2 - Não',
-            ]
-            conversation.state = 'talk_to_nurse'
+            if (conversation.type == 'videochamada') {
+              message.body = [
+                'Que pena, gostaria de iniciar um novo atendimento pela Teletriagem Inteligente(IA)? \n\n' +
+                  '1 - Sim\n' +
+                  '2 - Não',
+              ]
+              conversation.state = 'talk_to_ia'
+            } else {
+              message.body = [
+                'Que pena, gostaria de iniciar um novo atendimento de teletriagem por vídeochamada com um de nossos enfermeiros(as)? \n\n' +
+                  '1 - Sim\n' +
+                  '2 - Não',
+              ]
+              conversation.state = 'talk_to_nurse'
+            }
           } else {
             message.body = 'Essa opção não existe, por favor uma opção válida.'
             conversation.state = 'satisfaction_survey'
@@ -325,6 +337,35 @@ export class MessageChannel {
                 'Para voltar ao menu anterior digite 1',
             ]
             conversation.state = 'finished'
+          } else if (body === '2') {
+            message.body = [
+              'Estou muito feliz em poder ajudar você \n\n ' +
+                'Por favor, não envie arquivo de áudio ou vídeo.',
+
+              `Ei ${conversation.name}, \nPor favor, digite o número de uma das opções:\n` +
+                '1 - Teletriagem por vídeo chamada\n' +
+                '2 - Teletriagem Inteligente (IA)\n' +
+                '3 - Entrar em contato por ligação\n' +
+                '4 - Adicionar Dependentes\n\n' +
+                '9 - Encerrar Atendimento',
+            ]
+            conversation.state = 'select_service'
+          } else {
+            message.body = 'Essa opção não existe, por favor uma opção válida.'
+            conversation.state = 'talk_to_nurse'
+          }
+          break
+        case 'talk_to_ia':
+          if (body === '1') {
+            const linkVideo = await this.customerService.getLinkVideoIA(
+              conversation.personId,
+            )
+            message.body = [
+              'Nossa Teletriagem inteligente combina tecnologias de inteligência artificial e linguagem natural para te ajudar no início dos sintomas e orientar para o melhor desfecho de acordo com seu nível de urgência. O desfecho da sua Teletriagem pode ser o encaminhamento para uma Teleconsulta por vídeo, orientações de saúde ou necessidade de atendimento presencial. Para seguir com seu atendimento de Teletriagem inteligente, clique no link abaixo 👇\n' +
+                `${linkVideo.urlChat}\n\n` +
+                'Para volta ao menu anterior, digite 9',
+            ]
+            conversation.state = 'finished_tele_ia'
           } else if (body === '2') {
             message.body = [
               'Estou muito feliz em poder ajudar você \n\n ' +
