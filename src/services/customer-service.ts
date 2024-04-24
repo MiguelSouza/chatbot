@@ -71,8 +71,8 @@ export class CustomerService {
     try {
       const token = await this.getToken()
       const data = {
-        usuario: cpf,
-        senha: process.env.CUSTOMER_PASSWORD,
+        cpf: cpf,
+        Idempresa: process.env.EMPRESA,
       }
 
       const config = {
@@ -83,7 +83,7 @@ export class CustomerService {
       }
 
       const res: any = await axios
-        .post(`${this.baseURL}api/login`, data, config)
+        .post(`${this.baseURL}api/pessoa/buscar`, data, config)
         .then((response) => {
           return response.data
         })
