@@ -100,11 +100,10 @@ export class MessageChannel {
           const simpleCustomer =
             await this.customerService.getSimpleCustomer(body)
           if (simpleCustomer && simpleCustomer.IdUsuario) {
-            message.body = `Por favor, confirme o nome da pessoa que precisa do atendimento \n\n ${customer.NomeUsuario}? \n\n 1. Sim, o nome está correto. \n 2. Não, o nome não está correto.`
+            message.body = `Por favor, confirme o nome da pessoa que precisa do atendimento \n\n ${customer.Nome}? \n\n 1. Sim, o nome está correto. \n 2. Não, o nome não está correto.`
             conversation.name = customer.Nome
             conversation.userId = simpleCustomer.IdUsuario
-            conversation.personId = customer.IdPessoa
-            conversation.phone = customer.Telefone
+            conversation.personId = customer.Id
             conversation.state = 'check_customer'
           } else {
             message.body =
