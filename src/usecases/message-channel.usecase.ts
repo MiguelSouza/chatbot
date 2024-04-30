@@ -22,37 +22,41 @@ export class MessageChannel {
   }
 
   async execute(body: any, conversations: NodeCache): Promise<void> {
-    const { Body, From, To } = body
-    const optionsMessage = await this.buildOptionsMessage(
-      Body,
-      To,
-      From,
-      conversations,
-    )
-    await this.whatsappBroker.sendMessage(optionsMessage)
-
-    let conversation: Conversation = (conversations &&
-      conversations.get(From)) || {
-      state: '',
-      userId: '',
-      phone: '',
-      name: '',
-    }
-
-    if (conversation.state === 'finished_tele_ia') {
-      setTimeout(
-        async () => {
-          const optionsMessage = await this.buildOptionsMessage(
-            Body,
-            To,
-            From,
-            conversations,
-          )
-
-          await this.whatsappBroker.sendMessage(optionsMessage)
-        },
-        1000 * 60 * 10,
+    try {
+      const { Body, From, To } = body
+      const optionsMessage = await this.buildOptionsMessage(
+        Body,
+        To,
+        From,
+        conversations,
       )
+      await this.whatsappBroker.sendMessage(optionsMessage)
+
+      let conversation: Conversation = (conversations &&
+        conversations.get(From)) || {
+        state: '',
+        userId: '',
+        phone: '',
+        name: '',
+      }
+
+      if (conversation.state === 'finished_tele_ia') {
+        setTimeout(
+          async () => {
+            const optionsMessage = await this.buildOptionsMessage(
+              Body,
+              To,
+              From,
+              conversations,
+            )
+
+            await this.whatsappBroker.sendMessage(optionsMessage)
+          },
+          1000 * 60 * 10,
+        )
+      }
+    } catch (error) {
+      console.error('An error occurred:', error)
     }
   }
 
