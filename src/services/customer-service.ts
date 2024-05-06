@@ -13,28 +13,42 @@ export class CustomerService {
   async getToken() {
     const authToken = tokenCache.get('authToken')
     if (!authToken) {
-      const data = new URLSearchParams()
-
-      data.append('username', this.userName)
-      data.append('password', this.password)
-      data.append('grant_type', 'password')
-
-      const config = {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      }
-
-      const res: any = await axios
-        .post(`${this.baseURL}V1/api/token`, data.toString(), config)
-        .catch((error) => {
-          console.error('Erro ao obter token:', error)
-        })
-      tokenCache.set('authToken', res.data.access_token)
-      return res.data.access_token
-    } else {
-      return authToken
+      return await this.fetchNewToken()
     }
+
+    const tokenExpiration = tokenCache.get('tokenExpiration') as number
+    if (!tokenExpiration || tokenExpiration < Date.now()) {
+      return await this.fetchNewToken()
+    }
+
+    return authToken
+  }
+
+  async fetchNewToken() {
+    const data = new URLSearchParams()
+
+    data.append('username', this.userName)
+    data.append('password', this.password)
+    data.append('grant_type', 'password')
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    }
+
+    const res: any = await axios
+      .post(`${this.baseURL}V1/api/token`, data.toString(), config)
+      .catch((error) => {
+        console.error('Erro ao obter token:', error)
+      })
+    if (res && res.data && res.data.access_token) {
+      const tokenExpiration = Date.now() + 24 * 60 * 60 * 1000
+      tokenCache.set('authToken', res.data.access_token)
+      tokenCache.set('tokenExpiration', tokenExpiration)
+      return res.data.access_token
+    }
+    return null
   }
 
   async getSimpleCustomer(cpf: string): Promise<any> {
@@ -93,7 +107,7 @@ export class CustomerService {
 
       return res
     } catch (error) {
-      throw new Error('Erro ao obter os dados do cliente')
+      return null
     }
   }
 
