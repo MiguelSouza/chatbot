@@ -121,6 +121,8 @@ export class CustomerService {
           'Content-Type': 'application/json',
         },
       }
+      console.log(`${this.baseURL}api/autoatendimento/link/${userId}`)
+      console.log(JSON.stringify(config))
 
       const res: any = await axios
         .get(`${this.baseURL}api/autoatendimento/link/${userId}`, config)
