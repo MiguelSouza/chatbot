@@ -166,7 +166,7 @@ export class MessageChannel {
             )
             message.body = [
               'Nossa Teletriagem inteligente combina tecnologias de inteligência artificial e linguagem natural para te ajudar no início dos sintomas e orientar para o melhor desfecho de acordo com seu nível de urgência. O desfecho da sua Teletriagem pode ser o encaminhamento para uma Teleconsulta por vídeo, orientações de saúde ou necessidade de atendimento presencial. Para seguir com seu atendimento de Teletriagem inteligente, clique no link abaixo 👇\n' +
-                `${linkVideo.urlChat}\n\n` +
+                `${linkVideo.UrlChat}\n\n` +
                 'Para volta ao menu anterior, digite 9',
             ]
             conversation.type = 'tele_ia'
@@ -366,7 +366,7 @@ export class MessageChannel {
             )
             message.body = [
               'Nossa Teletriagem inteligente combina tecnologias de inteligência artificial e linguagem natural para te ajudar no início dos sintomas e orientar para o melhor desfecho de acordo com seu nível de urgência. O desfecho da sua Teletriagem pode ser o encaminhamento para uma Teleconsulta por vídeo, orientações de saúde ou necessidade de atendimento presencial. Para seguir com seu atendimento de Teletriagem inteligente, clique no link abaixo 👇\n' +
-                `${linkVideo.urlChat}\n\n` +
+                `${linkVideo.UrlChat}\n\n` +
                 'Para volta ao menu anterior, digite 9',
             ]
             conversation.state = 'finished_tele_ia'
