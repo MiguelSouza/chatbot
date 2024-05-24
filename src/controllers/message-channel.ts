@@ -9,6 +9,7 @@ export class MessageChannelController {
   }
 
   async waitingMessage(request: any, response: any, conversations: NodeCache) {
+    console.log('oi')
     await this.messageChannel.execute(request.body, conversations)
   }
 }
