@@ -153,10 +153,12 @@ export class MessageChannel {
               conversation.userId,
               conversation.phone,
             )
+            const urlCurta = await TinyURL.shorten(linkVideo.Url)
+
             message.body = [
               'Clique no link abaixo para acessar a sala de espera da teletriagem por videochamada 👇\n' +
                 'Por favor, certifique-se de usar o navegador Chrome ou Safari para uma melhor experiência.\n' +
-                `${linkVideo.Url}\n\n\n` +
+                `${urlCurta}\n\n\n` +
                 'Para voltar ao menu anterior digite 1',
             ]
             conversation.type = 'videochamada'
@@ -337,10 +339,12 @@ export class MessageChannel {
               conversation.userId,
               conversation.phone,
             )
+            const urlCurta = await TinyURL.shorten(linkVideo.Url)
+
             message.body = [
               'Clique no link abaixo para acessar a sala de espera da teletriagem por videochamada 👇\n' +
                 'Por favor, certifique-se de usar o navegador Chrome ou Safari para uma melhor experiência.\n' +
-                `${linkVideo.Url}\n\n\n` +
+                `${urlCurta}\n\n\n` +
                 'Para voltar ao menu anterior digite 1',
             ]
             conversation.state = 'finished'
