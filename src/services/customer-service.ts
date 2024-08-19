@@ -132,7 +132,7 @@ export class CustomerService {
         .catch((error) => {
           console.error('Erro ao ler dados:', error)
         })
-
+      console.log(res)
       return res
     } catch (error) {
       throw new Error('Erro ao obter a url do chat IA')
