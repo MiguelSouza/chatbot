@@ -155,7 +155,7 @@ export class MessageChannel {
               conversation.phone,
             )
             const urlCurta = await TinyURL.shorten(linkVideo.Url)
-
+            console.log(urlCurta)
             message.body = [
               'Clique no link abaixo para acessar a sala de espera da teletriagem por videochamada 👇\n' +
                 'Por favor, certifique-se de usar o navegador Chrome ou Safari para uma melhor experiência.\n' +
@@ -168,6 +168,7 @@ export class MessageChannel {
             const linkVideo = await this.customerService.getLinkVideoIA(
               conversation.personId,
             )
+            console.log(linkVideo.UrlChat)
             const urlCurta = await TinyURL.shorten(linkVideo.UrlChat)
 
             message.body = [
@@ -372,7 +373,10 @@ export class MessageChannel {
             const linkVideo = await this.customerService.getLinkVideoIA(
               conversation.personId,
             )
+            console.log(linkVideo.UrlChat)
+
             const urlCurta = await TinyURL.shorten(linkVideo.UrlChat)
+            console.log(urlCurta)
 
             message.body = [
               'Nossa Teletriagem inteligente combina tecnologias de inteligência artificial e linguagem natural para te ajudar no início dos sintomas e orientar para o melhor desfecho de acordo com seu nível de urgência. O desfecho da sua Teletriagem pode ser o encaminhamento para uma Teleconsulta por vídeo, orientações de saúde ou necessidade de atendimento presencial. Para seguir com seu atendimento de Teletriagem inteligente, clique no link abaixo 👇\n' +
