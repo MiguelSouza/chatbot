@@ -106,6 +106,7 @@ export class MessageChannel {
           const simpleCustomer =
             await this.customerService.getSimpleCustomer(body)
           if (simpleCustomer && simpleCustomer.IdUsuario) {
+            console.log(customer)
             message.body = `Por favor, confirme o nome da pessoa que precisa do atendimento \n\n ${customer.Nome}? \n\n 1. Sim, o nome está correto. \n 2. Não, o nome não está correto.`
             conversation.name = customer.Nome
             conversation.userId = simpleCustomer.IdUsuario
